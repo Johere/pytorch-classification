@@ -257,3 +257,42 @@ def support(pred, target, average_mode='macro'):
         else:
             raise ValueError(f'Unsupport type of averaging {average_mode}.')
     return res
+
+
+def mae_eval(pred, target, thrs=0.):
+    """Calculate mean average error according to the prediction and target.
+
+    Args:
+        pred (torch.Tensor): The model prediction with shape (N, 1).
+        target (torch.Tensor): The target of each prediction with
+            shape (N, 1)
+        thrs (Number | tuple[Number], optional): Predictions with scores under
+            the thresholds are considered negative. Default to 0.
+
+    Returns:
+         float: mae
+
+        +----------------------------+--------------------+-------------------+
+        | Args                       | ``thrs`` is number | ``thrs`` is tuple |
+        +============================+====================+===================+
+        | ``average_mode`` = "macro" | float              | list[float]       |
+        +----------------------------+--------------------+-------------------+
+        | ``average_mode`` = "none"  | np.array           | list[np.array]    |
+        +----------------------------+--------------------+-------------------+
+    """
+    if isinstance(pred, np.ndarray):
+        pred = torch.from_numpy(pred)
+    if isinstance(target, np.ndarray):
+        target = torch.from_numpy(target)
+    assert (
+        isinstance(pred, torch.Tensor) and isinstance(target, torch.Tensor)), \
+        (f'pred and target should be torch.Tensor or np.ndarray, '
+         f'but got {type(pred)} and {type(target)}.')
+    
+    pred = pred.view(pred.shape[0])
+    # Modified from PyTorch-Ignite
+    assert len(pred) == len(target)
+
+    mae_val = torch.mean(torch.abs(pred - target))
+
+    return mae_val

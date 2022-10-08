@@ -215,31 +215,37 @@ def main():
             results.update(eval_results)
             for k, v in eval_results.items():
                 if isinstance(v, np.ndarray):
-                    v = [round(out, 2) for out in v.tolist()]
+                    v = [round(out,  5) for out in v.tolist()]
                 elif isinstance(v, Number):
-                    v = round(v, 2)
+                    v = round(v, 5)
                 else:
                     raise ValueError(f'Unsupport metric type: {type(v)}')
                 print(f'\n{k} : {v}')
         if args.out:
-            if 'none' not in args.out_items:
-                scores = np.vstack(outputs)
-                pred_score = np.max(scores, axis=1)
-                pred_label = np.argmax(scores, axis=1)
-                pred_class = [CLASSES[lb] for lb in pred_label]
-                res_items = {
-                    'class_scores': scores,
-                    'pred_score': pred_score,
-                    'pred_label': pred_label,
-                    'pred_class': pred_class
-                }
-                if 'all' in args.out_items:
-                    results.update(res_items)
-                else:
-                    for key in args.out_items:
-                        results[key] = res_items[key]
-            print(f'\ndumping results to {args.out}')
-            mmcv.dump(results, args.out)
+            if len(CLASSES) == 1:
+                # save results for regression task
+                scores = np.vstack(outputs).reshape(-1)
+                output_file = dataset.format_results(scores, save_dir=args.out)
+                print(f'\nformat results and saved to: {output_file}')
+            else:
+                if 'none' not in args.out_items:
+                        scores = np.vstack(outputs)
+                        pred_score = np.max(scores, axis=1)
+                        pred_label = np.argmax(scores, axis=1)
+                        pred_class = [CLASSES[lb] for lb in pred_label]
+                        res_items = {
+                            'class_scores': scores,
+                            'pred_score': pred_score,
+                            'pred_label': pred_label,
+                            'pred_class': pred_class
+                        }
+                        if 'all' in args.out_items:
+                            results.update(res_items)
+                        else:
+                            for key in args.out_items:
+                                results[key] = res_items[key]
+                print(f'\ndumping results to {args.out}')
+                mmcv.dump(results, args.out)
 
 
 if __name__ == '__main__':

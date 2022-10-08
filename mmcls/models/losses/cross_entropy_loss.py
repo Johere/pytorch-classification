@@ -207,3 +207,36 @@ class CrossEntropyLoss(nn.Module):
             avg_factor=avg_factor,
             **kwargs)
         return loss_cls
+
+
+
+@LOSSES.register_module()
+class MeanSquaredErrorLoss(nn.Module):
+    """Mean Squared Error Loss
+
+    Args:
+        reduction (str): The method used to reduce the loss.
+            Options are "none", "mean" and "sum". Defaults to 'mean'.
+        loss_weight (float):  Weight of the loss. Defaults to 1.0.
+    """
+
+    def __init__(self,
+                 reduction='mean',
+                 loss_weight=1.0):
+        super(MeanSquaredErrorLoss, self).__init__()
+
+        self.reduction = reduction
+        self.loss_weight = loss_weight
+
+        '''
+        torch.nn.MSELoss(size_average=None, reduce=None, reduction='mean')
+        '''
+        self.criterion = nn.MSELoss(reduction=self.reduction)
+
+    def forward(self,
+                cls_score,
+                label,
+                **kwargs):
+        
+        loss_mse = self.loss_weight * self.criterion(cls_score, label)
+        return loss_mse

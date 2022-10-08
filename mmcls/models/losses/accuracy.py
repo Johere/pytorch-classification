@@ -5,6 +5,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 
+from mmcls.core.evaluation import mae_eval
+
 
 def accuracy_numpy(pred, target, topk=(1, ), thrs=0.):
     if isinstance(thrs, Number):
@@ -141,3 +143,27 @@ class Accuracy(nn.Module):
             list[torch.Tensor]: The accuracies under different topk criterions.
         """
         return accuracy(pred, target, self.topk)
+
+
+class MAEAccuracy(nn.Module):
+    
+    def __init__(self):
+        """Module to calculate the accuracy.
+
+        Args:
+            topk (tuple): The criterion used to calculate the
+                accuracy. Defaults to (1,).
+        """
+        super().__init__()
+
+    def forward(self, pred, target):
+        """Forward function to calculate accuracy.
+
+        Args:
+            pred (torch.Tensor): Prediction of models.
+            target (torch.Tensor): Target for each prediction.
+
+        Returns:
+            list[torch.Tensor]: The accuracies under different topk criterions.
+        """
+        return mae_eval(pred, target)

@@ -138,6 +138,8 @@ def train_model(model,
         model = wrap_non_distributed_model(
             model, cfg.device, device_ids=cfg.gpu_ids)
 
+    logger.info(model)
+    
     # build runner
     optimizer = build_optimizer(model, cfg.optimizer)
 
