@@ -23,39 +23,39 @@ data = dict(
     workers_per_gpu=2,
     train=dict(
         type=dataset_type,
-        # ann_file='/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/mini_train.list',
+        # ann_file='/mnt/disk1/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/mini_train.list',
         data_prefix=[
-                        '/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/images',
-                        '/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/images',
+                        '/mnt/disk1/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/images',
+                        '/mnt/disk1/data_for_linjiaojiao/datasets/BoxCars21k/images',
                     ],
         ann_file=[
-                    '/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_train.list',
-                    '/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_train.list',
+                    '/mnt/disk1/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_train.list',
+                    '/mnt/disk1/data_for_linjiaojiao/datasets/BoxCars21k/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_train.list',
                 ],
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
-        # ann_file='/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/mini_train.list',
+        # ann_file='/mnt/disk1/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/mini_train.list',
         data_prefix=[
-                        '/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/images',
-                        # '/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/images',
+                        '/mnt/disk1/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/images',
+                        # '/mnt/disk1/data_for_linjiaojiao/datasets/BoxCars21k/images',
                     ],
         ann_file=[
-                    '/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test_sparse.list',
-                    # '/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test.list',
+                    '/mnt/disk1/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test_sparse.list',
+                    # '/mnt/disk1/data_for_linjiaojiao/datasets/BoxCars21k/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test.list',
                 ],
         pipeline=test_pipeline),
     test=dict(
         # replace `data/val` with `data/test` for standard test
         type=dataset_type,
-        # ann_file='/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/mini_train.list',
+        # ann_file='/mnt/disk1/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/mini_train.list',
         data_prefix=[
-                        '/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/images',
-                        # '/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/images',
+                        '/mnt/disk1/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/images',
+                        # '/mnt/disk1/data_for_linjiaojiao/datasets/BoxCars21k/images',
                     ],
         ann_file=[
-                    '/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test_sparse.list',
-                    # '/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test.list',
+                    '/mnt/disk1/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test_sparse.list',
+                    # '/mnt/disk1/data_for_linjiaojiao/datasets/BoxCars21k/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test.list',
                 ],
         pipeline=test_pipeline))
 evaluation = dict(interval=1, metric='mae')
