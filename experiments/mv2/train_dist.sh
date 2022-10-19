@@ -6,15 +6,21 @@ export PYTHONPATH=${ROOT}:${PYTHONPATH}
 
 export JOBLIB_TEMP_FOLDER=/dev/shm
 export TMPDIR=/dev/shm
-#export CUDA_VISIBLE_DEVICES='0,1'
-#GPUS=${3-'0'}
-#export CUDA_VISIBLE_DEVICES=${GPUS}
+
+# # to debug NCCL error
+# export NCCL_DEBUG=WARN
+
 
 EXP_NAME=${1-debug}
-GPUID=${2-1}
+GPUS=${2-'0,1,2,3'}
+# get gpu-nums
+gpu_ids=(${GPUS//,/ })
+ngpus=${#gpu_ids[@]}
+export CUDA_VISIBLE_DEVICES=${GPUS}
+
 CONFIG_FILE=${3-${ROOT}/configs/mobilenet_v2/0.5mobilenet-v2_regression.py}
 
-
+EXP_NAME=${EXP_NAME}_${ngpus}gpus
 OUTPUT_DIR=output/${EXP_NAME}
 # for safety
 if [ -d ${OUTPUT_DIR} ]; then
@@ -26,11 +32,12 @@ fi
 mkdir -p ${OUTPUT_DIR}
 
 echo 'start training:' ${EXP_NAME} 'config:' ${CONFIG_FILE}
-python ${ROOT}/tools/train.py \
+
+python -m torch.distributed.launch --nproc_per_node=${ngpus} --master_port=29511 \
+${ROOT}/tools/train.py \
     ${CONFIG_FILE} \
-    --gpu-id ${GPUID} \
+    --launcher pytorch \
     --work-dir=${OUTPUT_DIR} \
     2>&1 | tee ${OUTPUT_DIR}/train.log
 
 echo ${EXP_NAME} 'done.'
-

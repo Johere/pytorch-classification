@@ -2,6 +2,7 @@
 set -x
 
 ROOT=../..
+DATASET_ROOT=/mnt/disk1/data_for_linjiaojiao/datasets
 export PYTHONPATH=${ROOT}:${PYTHONPATH}
 
 export JOBLIB_TEMP_FOLDER=/dev/shm
@@ -23,28 +24,28 @@ OUTPUT_DIR=output/${JOB_NAME}
 mkdir -p ./logs
 
 if [ ${TEST_SET} == "ua_detrac_ens" ]; then
-    DATA_PREFIX=/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/images
-    ANN_FILE=/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/ensemble_quality_score_weights_1.0_1.0_test.txt
+    DATA_PREFIX=${DATASET_ROOT}/UA_DETRAC_crop_fps5/images
+    ANN_FILE=${DATASET_ROOT}/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/ensemble_quality_score_weights_1.0_1.0_test.txt
 
 elif [ ${TEST_SET} == "ua_detrac_blur" ]; then
-    DATA_PREFIX=/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/images
-    ANN_FILE=/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/trainval_laplace_var_normalize_test.txt
+    DATA_PREFIX=${DATASET_ROOT}/UA_DETRAC_crop_fps5/images
+    ANN_FILE=${DATASET_ROOT}/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/trainval_laplace_var_normalize_test.txt
 
 elif [ ${TEST_SET} == "ua_detrac_mag" ]; then
-    DATA_PREFIX=/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/images
-    ANN_FILE=/mnt/disk3/data_for_linjiaojiao/datasets/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test.list
+    DATA_PREFIX=${DATASET_ROOT}/UA_DETRAC_crop_fps5/images
+    ANN_FILE=${DATASET_ROOT}/UA_DETRAC_crop_fps5/annotations/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test.list
 
 elif [ ${TEST_SET} == "boxcars_ens" ]; then
-    DATA_PREFIX=/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/images
-    ANN_FILE=/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/quality_score/dataset-splits/ensemble_quality_score_weights_1.0_1.0_test.txt
+    DATA_PREFIX=${DATASET_ROOT}/BoxCars21k/images
+    ANN_FILE=${DATASET_ROOT}/BoxCars21k/quality_score/dataset-splits/ensemble_quality_score_weights_1.0_1.0_test.txt
 
 elif [ ${TEST_SET} == "boxcars_blur" ]; then
-    DATA_PREFIX=/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/images
-    ANN_FILE=/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/quality_score/dataset-splits/trainval_laplace_var_normalize_test.txt
+    DATA_PREFIX=${DATASET_ROOT}/BoxCars21k/images
+    ANN_FILE=${DATASET_ROOT}/BoxCars21k/quality_score/dataset-splits/trainval_laplace_var_normalize_test.txt
 
 elif [ ${TEST_SET} == "boxcars_mag" ]; then
-    DATA_PREFIX=/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/images
-    ANN_FILE=/mnt/disk3/data_for_linjiaojiao/datasets/BoxCars21k/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test.list
+    DATA_PREFIX=${DATASET_ROOT}/BoxCars21k/images
+    ANN_FILE=${DATASET_ROOT}/BoxCars21k/quality_score/dataset-splits/magface_feature_norm_qa_mag0_trainval_normalize_test.list
 fi
 
 echo 'start testing:' ${EXP_NAME} 'config:' ${CONFIG_FILE} 'checkpoint: ' ${CHECKPOINT}
